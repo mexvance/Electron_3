@@ -18,8 +18,9 @@ function saveFile(filepath, filename, contents) {
 function readDirectory() {
     dialog.showOpenDialog(null, {properties: ["openDirectory"]})
     .then(result => {
-        let files = fs.readdirSync(result.filePaths[0])
-        console.log(files);
+        fs.readdir(result.filePaths[0], (err,files) => {
+          console.log(files);
+        })
     });
 }
 
