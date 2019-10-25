@@ -4,28 +4,31 @@ let content = "Some file that is fun";
 
 
 function saveFile(filepath,filename,contents){
-    fs.writeFile("C:/Users/Kyler.Daybell/Desktop/kyler.txt","kyler was here",()=>{
-        return;
-    });
+    dialog.showSaveDialog(null, {properties:["OpenDirectory"]})
+    .then(result=>{
+        console.log(result);
+        filename = result.filePath;
+        console.log(filename);
+        fs.writeFile(filename,"brandon was here",()=>{
+            return;
+        });
+    })
 }
 
-function readFile(fileName, filepath){
+function readFile(){
     console.log("In ReadFile");
-    dialog.showOpenDialog((fileName) => {
-        // fileNames is an array that contains all the selected
-        if(fileName === undefined){
-            console.log("No file selected");
-            return;
-        }
-    
+    let filepath;
+    dialog.showOpenDialog(null, {properties:["OpenDirectory"]})
+    .then(result=>{
+        filepath = result.filePaths[0];
+        console.log(filepath);
         fs.readFile(filepath, 'utf-8', (err, data) => {
             if(err){
                 alert("An error ocurred reading the file :" + err.message);
                 return;
             }
-    
-            // Change how to handle the file content
             console.log("The file content is : " + data);
+            document.getElementById("fileinfoedit").innerHTML = data;
         });
     });
 }
