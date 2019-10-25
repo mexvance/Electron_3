@@ -21,6 +21,7 @@ function readFile() {
   dialog
     .showOpenDialog(null, { properties: ["OpenDirectory"] })
     .then(result => {
+        console.log(result.filePaths);
       filepath = result.filePaths[0];
       console.log(filepath);
       fs.readFile(filepath, "utf-8", (err, data) => {
