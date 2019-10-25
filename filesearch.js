@@ -15,11 +15,19 @@ function saveFile(filepath, filename, contents) {
     });
 }
 
+function readDirectory() {
+    dialog.showOpenDialog(null, {properties: ["openDirectory"]})
+    .then(result => {
+        let files = fs.readdirSync(result.filePaths[0])
+        console.log(files);
+    });
+}
+
 function readFile() {
   console.log("In ReadFile");
   let filepath;
   dialog
-    .showOpenDialog(null, { properties: ["OpenDirectory"] })
+    .showOpenDialog(null, {})
     .then(result => {
         console.log(result.filePaths);
       filepath = result.filePaths[0];
