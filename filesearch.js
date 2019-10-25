@@ -20,10 +20,16 @@ function readDirectory() {
     .then(result => {
         fs.readdir(result.filePaths[0], (err,files) => {
           console.log(files);
-          let filteredFiles = files.filter(f=>f.includes("."))
+          let filteredFiles = files.filter(f=>pathIsFile(result.filePaths[0], f))
           console.log(filteredFiles);
         })
     });
+}
+
+function pathIsFile(path, file){
+  let fullPath = path.concat("\\",file)
+  let stat = fs.statSync(fullPath);
+  return stat.isFile()
 }
 
 function readFile() {
