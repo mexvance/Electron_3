@@ -31,7 +31,7 @@ function setFileList(filteredFiles) {
   let listHtml = "";
   console.log(filteredFiles);
   for(let file of filteredFiles){
-    listHtml = listHtml.concat("<li>",file,"</li>")
+    listHtml = listHtml.concat("<li onclick=\"\">",file,"</li>")
   }
   console.log(listHtml);
   document.getElementById("fileList").innerHTML = listHtml;
@@ -43,7 +43,7 @@ function pathIsFile(path, file){
   return stat.isFile()
 }
 
-function readFile() {
+function readFileWithDialog() {
   console.log("In ReadFile");
   let filepath;
   dialog
