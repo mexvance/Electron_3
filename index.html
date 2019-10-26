@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Hello World!</title>
-<!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
-<script src="filesearch.js"></script>
-</head>
-<body>
-<h1>Yeet!</h1>
-</body>
-<div style="color: green">Current Directory Is: <span id="workingDirectory"></span></div>
-<ul id="fileList"></ul>
-<button onclick="saveFile()">Create File</button>
-
-<button onclick="readFileWithDialog()">Read File</button>
-<button onclick="readDirectory()">Read Dir</button>
-<div id ="fileinfoedit" contenteditable="true" style="background-color: bisque"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World!</title>
+    <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
+    <script src="filesearch.js"></script>
+    <link rel="stylesheet" type="text/css" href="index.css" />
+  </head>
+  <body>
+    <h1>Yeet!</h1>
+  </body>
+  <div style="color: green">
+    Current Directory Is: <span id="workingDirectory"></span>
+  </div>
+  <ul id="fileList"></ul>
+  <button onclick="readDirectory()">Read Directory</button>
+  <button onclick="saveFile()">Save File</button>
+  <div
+    id="fileinfoedit"
+    contenteditable="true"
+    style="background-color: bisque"
+  ></div>
 </html>
