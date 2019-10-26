@@ -31,10 +31,24 @@ function setFileList(filteredFiles) {
   let listHtml = "";
   console.log(filteredFiles);
   for(let file of filteredFiles){
-    listHtml = listHtml.concat("<li onclick=\"\">",file,"</li>")
+    listHtml = listHtml.concat("<li onclick=\"readFile(event)\">",file,"</li>")
   }
   console.log(listHtml);
   document.getElementById("fileList").innerHTML = listHtml;
+}
+
+function readFile(event){
+  console.log(event.target.textContent);
+  let filepath = document.getElementById("workingDirectory").innerText;
+  filepath = filepath.concat("\\", event.target.textContent)
+  fs.readFile(filepath, "utf-8", (err, data) => {
+    if (err) {
+      alert("An error ocurred reading the file :" + err.message);
+      return;
+    }
+    console.log("The file content is : " + data);
+    document.getElementById("fileinfoedit").innerText = data;
+  });
 }
 
 function pathIsFile(path, file){
@@ -43,6 +57,7 @@ function pathIsFile(path, file){
   return stat.isFile()
 }
 
+//This is the old read file function that opens up the dialog
 function readFileWithDialog() {
   console.log("In ReadFile");
   let filepath;
