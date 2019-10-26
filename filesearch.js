@@ -18,12 +18,23 @@ function saveFile(filepath, filename, contents) {
 function readDirectory() {
     dialog.showOpenDialog(null, {properties: ["openDirectory"]})
     .then(result => {
-        fs.readdir(result.filePaths[0], (err,files) => {
-          console.log(files);
-          let filteredFiles = files.filter(f=>pathIsFile(result.filePaths[0], f))
-          console.log(filteredFiles);
+      let path = result.filePaths[0];
+      document.getElementById("workingDirectory").innerText=path
+        fs.readdir(path, (err,files) => {
+          let filteredFiles = files.filter(f=>pathIsFile(path, f))
+          setFileList(filteredFiles);
         })
     });
+}
+
+function setFileList(filteredFiles) {
+  let listHtml = "";
+  console.log(filteredFiles);
+  for(let file of filteredFiles){
+    listHtml = listHtml.concat("<li>",file,"</li>")
+  }
+  console.log(listHtml);
+  document.getElementById("fileList").innerHTML = listHtml;
 }
 
 function pathIsFile(path, file){
