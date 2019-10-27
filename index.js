@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron')
+const ipc = require('electron').ipcMain;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -7,8 +8,8 @@ let win
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({
-    width: 1200,
-    height: 800,
+    width: 800,
+    height: 600,
     webPreferences: {
       nodeIntegration: true,
       nodeIntegrationInWorker: true // <---  for web workers
@@ -20,16 +21,35 @@ function createWindow () {
 
   // Open the DevTools.
   win.webContents.openDevTools()
-
-  // Emitted when the window is closed.
   win.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
     win = null
-  })
-}
+   })
 
+  win.on('close',(event) =>{
+      win.webContents.send('app-close');
+      event.preventDefault()
+  });
+}
+ipc.on('closed', (result, arg) => {
+    if (arg == true)
+    {
+        var choice = require('electron').dialog.showMessageBoxSync(win,
+        options = {
+          type: 'question',
+          buttons: ['Yes', 'No'],
+          title: 'Confirm',
+          message: 'You have unsaved changes in your file.\n\nAre you sure you want exit before saving?'
+      });
+      if(choice == 0){
+        win = null;
+        app.quit()
+      }
+    }
+    else{
+      win = null;
+      app.quit()
+    }
+})
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.

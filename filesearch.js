@@ -1,5 +1,6 @@
 var fs = require("fs");
 const { dialog } = require("electron").remote;
+const ipc = require('electron').ipcRenderer;
 
 function saveFile() {
   dialog
@@ -19,14 +20,22 @@ function saveFile() {
             displayPathArr.forEach(function(element) {
                 displayPath += element + "/";
             });
-            savealert.style.backgroundColor = "success";
-            savealert.innerText = filename + " was saved to: " + displayPath;
+            try{
+            fs.writeFile(filename, contents, () => {
+                savealert.style.backgroundColor = "success";
+                savealert.innerText = filename + " was saved to: " + displayPath;
+                document.getElementById("fileinfoeditoriginal").innerText = contents;
+              });
+            }
+            catch {
+                savealert.style.backgroundColor = "red";
+                savealert.innerText = "There was an error saving " +filename;
+            }
             savealert.style.display = "block";
             setTimeout(function() {
                 savealert.style.display = "none";
             }, 5000);
-
-        }   
+        }
     });
 }
 
@@ -53,7 +62,7 @@ function setFileList(filteredFiles) {
 }
 
 function readFile(event){
-  console.log(event.target.textContent);
+    console.log("in read file")
   document.getElementById("selectedFile").innerText = event.target.textContent;
   let filepath = document.getElementById("workingDirectory").innerText;
   document.getElementById("savebutton").innerText = "Save File";
@@ -63,8 +72,10 @@ function readFile(event){
       alert("An error ocurred reading the file :" + err.message);
       return;
     }
-    console.log("The file content is : " + data);
     document.getElementById("fileinfoedit").innerText = data;
+    document.getElementById("fileinfoeditoriginal").innerText = data;
+    console.log(document.getElementById("fileinfoedit").innerText)
+    console.log(document.getElementById("fileinfoeditoriginal").innerText)
   });
 }
 
@@ -91,6 +102,15 @@ function readFileWithDialog() {
         }
         console.log("The file content is : " + data);
         document.getElementById("fileinfoedit").innerText = data;
+        document.getElementById("fileinfoeditoriginal").innerText = data;
       });
     });
 }
+ipc.on('app-close', () => {
+    console.log("Got to ipc listener")
+    let textIsDirty = document.getElementById("fileinfoedit").innerText !== document.getElementById("fileinfoeditoriginal").innerText;
+    console.log(document.getElementById("fileinfoedit").innerText)
+    console.log(document.getElementById("fileinfoeditoriginal").innerText)
+    ipc.send('closed', textIsDirty)
+})
+
