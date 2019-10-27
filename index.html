@@ -16,13 +16,13 @@
   <ul id="fileList"></ul>
   <div class="buttons">
     <button class="button" onclick="readDirectory()">Read Directory</button>
-    <button class="button" onclick="saveFile()">Save File</button>
+    <button id="savebutton" class="button" onclick="saveFile()">Create File</button>
   </div>
   <div style="display:flex">
   <div class="filetitle" style="color: green">Selected File Name:</div>
   <div class="filetitle" id="selectedFile" style="color: green"></div>
   </div>
-  
+
   <div id="savepopup" style="display: none">
     <span id="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
     You file was saved correctly

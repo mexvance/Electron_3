@@ -56,6 +56,7 @@ function readFile(event){
   console.log(event.target.textContent);
   document.getElementById("selectedFile").innerText = event.target.textContent;
   let filepath = document.getElementById("workingDirectory").innerText;
+  document.getElementById("savebutton").innerText = "Save File";
   filepath = filepath.concat("\\", event.target.textContent)
   fs.readFile(filepath, "utf-8", (err, data) => {
     if (err) {
