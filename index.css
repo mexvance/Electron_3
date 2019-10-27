@@ -13,35 +13,33 @@ li:hover{
     background-color: #4BB543; /* Red */
     color: white;
     margin-top: 10px;
-  }
-  
-  /* The close button */
-  .closebtn {
-    margin-left: 15px;
-    color: white;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  /* When moving the mouse over the close button */
-  .closebtn:hover {
-    color: black;
-  }
-  .button {
+    border-radius: 2px;
+    margin-bottom: 1px;
+    text-align:center;
+}  
+
+.button {
     background-color: #008CBA;
     border: none;
     color: white;
-    padding: 15px 32px;
+    padding: 10px 25px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
     margin: 5px 0px 5px 0px;
   }
-  .buttons {
+.buttons {
       margin-bottom: 10px;
-  }
+}
+#fileinfoedit{
+    background-color: bisque;
+    min-height: 200px;
+    padding: 10px;
+}
+.filetitle {
+      display: block;
+      float: left;
+      margin-bottom: 5px;
+      margin-left: 2px;
+}
