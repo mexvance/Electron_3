@@ -14,8 +14,15 @@
     Current Directory Is: <span id="workingDirectory"></span>
   </div>
   <ul id="fileList"></ul>
-  <button onclick="readDirectory()">Read Directory</button>
-  <button onclick="saveFile()">Save File</button>
+  <div class="buttons">
+    <button class="button" onclick="readDirectory()">Read Directory</button>
+    <button class="button" onclick="saveFile()">Save File</button>
+  </div>
+  <div id="selectedFile" style="display: none;"></div>
+  <div id="savepopup" style="display: none">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    You file was saved correctly
+  </div>
   <div
     id="fileinfoedit"
     contenteditable="true"

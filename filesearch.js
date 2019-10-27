@@ -1,17 +1,32 @@
 var fs = require("fs");
 const { dialog } = require("electron").remote;
 
-function saveFile(filepath, filename, contents) {
+function saveFile() {
   dialog
-    .showSaveDialog(null, { properties: ["OpenDirectory"] })
+    .showSaveDialog(null, { properties: ["openFile", "openDirectory"], defaultPath: document.getElementById("selectedFile").innerText})
     .then(result => {
-      console.log(result);
-      filename = result.filePath;
-      console.log(filename);
-      contents = document.getElementById("fileinfoedit").innerText;
-      fs.writeFile(filename, contents, () => {
-        return;
-      });
+        console.log(result);
+        if (result.canceled !== true)
+        {
+            filepath = result.filePath;
+            console.log(filepath);
+            contents = document.getElementById("fileinfoedit").innerText;
+            let savealert = document.getElementById("savepopup")
+            let filename = filepath.split("\\").pop();
+            let displayPathArr = filepath.split("\\");
+            let displayPath = "";
+            displayPathArr.pop();
+            displayPathArr.forEach(function(element) {
+                displayPath += element + "/";
+            });
+            savealert.style.backgroundColor = "success";
+            savealert.innerText = filename + " was saved to: " + displayPath;
+            savealert.style.display = "block";
+            setTimeout(function() {
+                savealert.style.display = "none";
+            }, 5000);
+
+        }   
     });
 }
 
@@ -39,6 +54,7 @@ function setFileList(filteredFiles) {
 
 function readFile(event){
   console.log(event.target.textContent);
+  document.getElementById("selectedFile").innerText = event.target.textContent;
   let filepath = document.getElementById("workingDirectory").innerText;
   filepath = filepath.concat("\\", event.target.textContent)
   fs.readFile(filepath, "utf-8", (err, data) => {
