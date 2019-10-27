@@ -1,6 +1,7 @@
 var fs = require("fs");
 const { dialog } = require("electron").remote;
 const ipc = require('electron').ipcRenderer;
+var originalfileinfo = "";
 
 function saveFile() {
   dialog
@@ -23,8 +24,8 @@ function saveFile() {
             try{
             fs.writeFile(filename, contents, () => {
                 savealert.style.backgroundColor = "success";
-                savealert.innerText = filename + " was saved to: " + displayPath;
-                document.getElementById("fileinfoeditoriginal").innerText = contents;
+                savealert.innerText = filename + " was saved to: " + displayPath;;
+                originalfileinfo = document.getElementById("fileinfoedit").innerText;
               });
             }
             catch {
@@ -73,9 +74,7 @@ function readFile(event){
       return;
     }
     document.getElementById("fileinfoedit").innerText = data;
-    document.getElementById("fileinfoeditoriginal").innerText = data;
-    console.log(document.getElementById("fileinfoedit").innerText)
-    console.log(document.getElementById("fileinfoeditoriginal").innerText)
+    originalfileinfo = document.getElementById("fileinfoedit").innerText;
   });
 }
 
@@ -102,15 +101,15 @@ function readFileWithDialog() {
         }
         console.log("The file content is : " + data);
         document.getElementById("fileinfoedit").innerText = data;
-        document.getElementById("fileinfoeditoriginal").innerText = data;
+        originalfileinfo = document.getElementById("fileinfoedit").innerText
       });
     });
 }
 ipc.on('app-close', () => {
     console.log("Got to ipc listener")
-    let textIsDirty = document.getElementById("fileinfoedit").innerText !== document.getElementById("fileinfoeditoriginal").innerText;
+    let textIsDirty = document.getElementById("fileinfoedit").innerText != originalfileinfo;
     console.log(document.getElementById("fileinfoedit").innerText)
-    console.log(document.getElementById("fileinfoeditoriginal").innerText)
+    console.log(originalfileinfo)
     ipc.send('closed', textIsDirty)
 })
 
