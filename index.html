@@ -10,7 +10,7 @@
   <body>
     <h1>Electron File Editor</h1>
   </body>
-  <div style="color: green">
+  <div class="titles">
     Current Directory Is: <span id="workingDirectory"></span>
   </div>
   <ul id="fileList"></ul>
@@ -19,8 +19,10 @@
     <button id="savebutton" class="button" onclick="saveFile()">Create File</button>
   </div>
   <div style="display:flex">
-  <div class="filetitle" style="color: green">Selected File Name:</div>
-  <div class="filetitle" id="selectedFile" style="color: green"></div>
+  <div class="titles">
+    <div class="filetitle" class="titles">Selected File Name:</div>
+    <div class="filetitle" id="selectedFile"></div>
+  </div>
   </div>
 
   <div id="savepopup" style="display: none">
